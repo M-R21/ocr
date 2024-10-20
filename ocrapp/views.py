@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from pdf2image import convert_from_bytes  # Use convert_from_bytes instead of path for in-memory files
 import pytesseract
-from .forms import PDFUploadForm
+from forms import PDFUploadForm
 
 def pdf_to_csv_view(request):
     if request.method == 'POST':
