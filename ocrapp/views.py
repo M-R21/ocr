@@ -1,3 +1,49 @@
+import os
+import pandas as pd
+from django.http import HttpResponse
 from django.shortcuts import render
+from pdf2image import convert_from_path
+import pytesseract
+from forms import PDFUploadForm
 
-# Create your views here.
+def pdf_to_csv_view(request):
+    if request.method == 'POST':
+        form = PDFUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            pdf_file = request.FILES['pdf_file']
+
+            # Convert PDF to Images
+            images = convert_from_path(pdf_file.temporary_file_path())
+
+            extracted_data = []
+
+            # OCR on each page
+            for img in images:
+                text = pytesseract.image_to_string(img)
+                # Process the extracted text to get table data
+                rows = extract_table_data(text)
+                extracted_data.extend(rows)
+
+            # Create CSV from extracted data
+            df = pd.DataFrame(extracted_data)
+
+            # Return CSV as download
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="output.csv"'
+            df.to_csv(path_or_buf=response, index=False)
+
+            return response
+    else:
+        form = PDFUploadForm()
+
+    return render(request, 'ocrapp/upload.html', {'form': form})
+
+def extract_table_data(text):
+    # Simple table extraction (modify this for your specific use case)
+    rows = []
+    lines = text.split("\n")
+    for line in lines:
+        columns = line.split()  # Assuming columns are separated by spaces
+        if columns:  # Ignore empty lines
+            rows.append(columns)
+    return rows
