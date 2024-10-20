@@ -1,10 +1,11 @@
+# ocrapp/views.py
 import os
 import pandas as pd
 from django.http import HttpResponse
 from django.shortcuts import render
-from pdf2image import convert_from_path
+from pdf2image import convert_from_bytes  # Use convert_from_bytes instead of path for in-memory files
 import pytesseract
-from forms import PDFUploadForm
+from .forms import PDFUploadForm
 
 def pdf_to_csv_view(request):
     if request.method == 'POST':
@@ -12,8 +13,11 @@ def pdf_to_csv_view(request):
         if form.is_valid():
             pdf_file = request.FILES['pdf_file']
 
-            # Convert PDF to Images
-            images = convert_from_path(pdf_file.temporary_file_path())
+            # Convert PDF file to bytes (works for both in-memory and disk-based files)
+            pdf_bytes = pdf_file.read()
+
+            # Convert PDF bytes to images (use convert_from_bytes instead of convert_from_path)
+            images = convert_from_bytes(pdf_bytes)
 
             extracted_data = []
 
