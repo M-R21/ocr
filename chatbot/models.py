@@ -12,7 +12,7 @@ class FAQ(models.Model):
 
 class ClientQuestion(models.Model):
     question = models.CharField(max_length=255)
-    client = models.ForeignKey(User, on_delete=models.CASCADE)
+    client = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)  # Make client optional
     admin_assigned = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assigned_questions', blank=True, null=True)
     answer = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

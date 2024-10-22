@@ -1,7 +1,5 @@
-<h1>Q&A Chatbot</h1>
-
-<form method="post">
+<form method="POST">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Ask</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>

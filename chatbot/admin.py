@@ -15,3 +15,4 @@ class ClientQuestionAdmin(admin.ModelAdmin):
     search_fields = ('question',)
     list_filter = ('answered_at', 'admin_assigned')
 
+

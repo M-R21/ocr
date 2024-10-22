@@ -1,7 +1,11 @@
 from django import forms
-from .models import ClientQuestion
 
-class QuestionForm(forms.ModelForm):
-    class Meta:
-        model = ClientQuestion
-        fields = ['question']
+class QuestionForm(forms.Form):
+    question = forms.CharField(
+        max_length=255,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Ask your question here...'
+        }),
+        label=''
+    )

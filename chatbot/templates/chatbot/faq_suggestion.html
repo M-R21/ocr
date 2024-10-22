@@ -1,10 +1,11 @@
-<h2>Did you mean this?</h2>
-<p><strong>{{ faq.question }}</strong></p>
+<h2>Did you mean this question?</h2>
+<p><strong>Question:</strong> {{ faq.question }}</p>
+<p><strong>Answer:</strong> {{ faq.answer }}</p>
 
-<p>If yes, here's the answer:</p>
-<p>{{ faq.answer }}</p>
-
-<form method="post">
-  <input type="hidden" name="question" value="{{ client_question }}">
-  <button type="submit">No, submit my question</button>
+<form method="POST" action="">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-success">Yes, this answers my question</button>
 </form>
+
+<p>Didn't find what you're looking for?</p>
+<a href="{% url 'chatbot:chat' %}" class="btn btn-primary">Submit a new question</a>
