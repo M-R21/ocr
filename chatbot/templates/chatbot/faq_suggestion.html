@@ -1,0 +1,10 @@
+<h2>Did you mean this?</h2>
+<p><strong>{{ faq.question }}</strong></p>
+
+<p>If yes, here's the answer:</p>
+<p>{{ faq.answer }}</p>
+
+<form method="post">
+  <input type="hidden" name="question" value="{{ client_question }}">
+  <button type="submit">No, submit my question</button>
+</form>
