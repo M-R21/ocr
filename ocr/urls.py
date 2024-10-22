@@ -19,5 +19,4 @@ from django.urls import path , include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('ocrapp.urls')),
-    path('', include('ocrapp1_2.urls')),
 ]
