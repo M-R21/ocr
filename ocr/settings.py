@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ocrapp', #installed app
     'rest_framework', #installed app
-    'ocrapp1_2' ,
+    'chatbot', #installed app,
     
 ]
 
